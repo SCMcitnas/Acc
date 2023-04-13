@@ -1,6 +1,7 @@
 package ficheros;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,11 +45,39 @@ public class Ejercicio1 {
 		}
 	}
 	
+	public void unirFicheros(File[] ficheros) {
+		
+		String contenidoTot="";
+		
+		for(int i=0; i<ficheros.length; i++) {
+			try(Scanner sc= new Scanner(ficheros[i])){
+				while(sc.hasNext()) {
+					contenidoTot+=sc.nextLine();
+				}
+				contenidoTot+=" ";
+			}catch (FileNotFoundException e) {
+				System.out.print(e);
+			}
+		}
+
+		File ficheroUnico= new File("C:\\Users\\Santiago\\Desktop\\textoUnificado.txt");
+		try(PrintWriter pw = new PrintWriter(ficheroUnico)){
+			pw.print(contenidoTot);
+		}catch (FileNotFoundException e) {
+			System.out.print(e);
+		}
+		
+	}
+	
 	public static void main(String[] args) throws IOException {
 
         Ejercicio1 ejercicio1= new Ejercicio1();
-        File fichero = new File("C:\\Users\\Santiago\\Desktop\\texto.txt");
-        //ejercicio1.divisionCart(3,fichero);
-        ejercicio1.divisionLineas(1,fichero);
+        File fichero1 = new File("C:\\Users\\Santiago\\Desktop\\texto.txt");
+        File fichero2 = new File("C:\\Users\\Santiago\\Desktop\\texto2.txt");
+        File fichero3 = new File("C:\\Users\\Santiago\\Desktop\\texto3.txt");
+        File[] ficheros= {fichero1,fichero2,fichero3};
+        //ejercicio1.divisionCart(3,fichero1);
+        //ejercicio1.divisionLineas(1,fichero1);
+        ejercicio1.unirFicheros(ficheros);
     }
 }
