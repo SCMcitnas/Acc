@@ -104,30 +104,11 @@ public class Ejer5{
 		
 	}
 	
-	public void recorreDom3(Document doc) {
-		String nEquipo;
-		int goles=0;
-		NodeList clasificacion,hijos;
-		
-		clasificacion=doc.getElementsByTagName("team");
-		for(int i=0;i<clasificacion.getLength();i++) {
-			hijos=clasificacion.item(i).getChildNodes();
-			
-			for(int j=0;j<hijos.getLength();j++) {
-				if(hijos.item(j).getNodeName().equals("goals_scored")) {
-					if(Integer.parseInt(hijos.item(j).getNodeValue())>goles) {
-						goles=Integer.parseInt(hijos.item(j).getNodeValue());
-					}
-				}
-			}
-		}
-		System.out.println(goles);
-	}
 	
 	
 	public static void main(String[] args)  {
 		Ejer5 ejer5= new Ejer5();
 		Document doc = ejer5.creaArbol("https://www.marca.com/marcador/futbol/iphone/1/2016_17/fase0/jornada_31/marcador.xml");
-		ejer5.recorreDom3(doc);
+		ejer5.recorreDom2(doc);
 	}
 }
