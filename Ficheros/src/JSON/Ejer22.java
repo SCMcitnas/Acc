@@ -10,13 +10,14 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.w3c.dom.Document;
 
 
-public class Ejer18{
+public class Ejer22{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -53,16 +54,21 @@ public class Ejer18{
 	}
 	
 	public void mostrarJSON(JsonValue json) {
-		String algo=json.asJsonObject().getString("name");
-		System.out.println(json.asJsonObject().getString("name"));
-		System.out.println(json.asJsonObject().getString("region"));
-		System.out.println(json.asJsonObject().getString("coatOfArms"));
+		if(json.asJsonObject().containsKey("ancestralWeapons")) {
+			JsonArray armas = json.asJsonObject().getJsonArray("ancestralWeapons");
+			JsonString nombreCasa = json.asJsonObject().getJsonString("name");
+			System.out.println(nombreCasa.getString()+":");
+			for(JsonString arma : armas.getValuesAs(JsonString.class)) {
+				System.out.println("\t-"+arma.getString());
+			}
+			System.out.println("\n");	
+		}
 	}
 	
 	public static void main(String[] args)  {
-		Ejer18 ejer18= new Ejer18();
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/362"));
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/378"));
+		Ejer22 ejer22= new Ejer22();
+		ejer22.mostrarJSON(ejer22.leeJSON("https://anapioficeandfire.com/api/houses/362"));
+		ejer22.mostrarJSON(ejer22.leeJSON("https://anapioficeandfire.com/api/houses/378"));
 
 	}
 }

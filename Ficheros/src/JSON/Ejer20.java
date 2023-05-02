@@ -10,6 +10,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.net.ssl.HttpsURLConnection;
 
@@ -57,16 +58,17 @@ public class Ejer20{
 		if(json.asJsonObject().containsKey("allegiances")) {
 			JsonArray aliados = json.asJsonObject().getJsonArray("allegiances");
 			
-			for(JsonValue aliado : aliados.getValuesAs(JsonValue.class)) {
-				String link=aliado.toString();
+			for(JsonString aliado : aliados.getValuesAs(JsonString.class)) {
+				String link=aliado.getString();
 				System.out.println("Casa aliada: "+ejer20.leeJSON(link).asJsonObject().getString("name"));
 			}
 		}
+		System.out.println("\n");
 	}
 	
 	public static void main(String[] args)  {
 		Ejer20 ejer20= new Ejer20();
-		//ejer20.mostrarJSON(ejer20.leeJSON("https://anapioficeandfire.com/api/characters/583"));
+		ejer20.mostrarJSON(ejer20.leeJSON("https://anapioficeandfire.com/api/characters/583"));
 		ejer20.mostrarJSON(ejer20.leeJSON("https://anapioficeandfire.com/api/characters/271"));
 
 	}

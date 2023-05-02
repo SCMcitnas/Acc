@@ -10,13 +10,14 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.w3c.dom.Document;
 
 
-public class Ejer18{
+public class Ejer24{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -52,17 +53,13 @@ public class Ejer18{
 		return jsonV;
 	}
 	
-	public void mostrarJSON(JsonValue json) {
-		String algo=json.asJsonObject().getString("name");
-		System.out.println(json.asJsonObject().getString("name"));
-		System.out.println(json.asJsonObject().getString("region"));
-		System.out.println(json.asJsonObject().getString("coatOfArms"));
+	public void mostrarJSON(JsonValue casa1, JsonValue casa2) {
+
 	}
 	
 	public static void main(String[] args)  {
-		Ejer18 ejer18= new Ejer18();
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/362"));
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/378"));
+		Ejer24 ejer24= new Ejer24();
+		ejer24.mostrarJSON(ejer24.leeJSON("https://anapioficeandfire.com/api/houses/362"), ejer23.leeJSON("https://anapioficeandfire.com/api/houses/378"));
 
 	}
 }

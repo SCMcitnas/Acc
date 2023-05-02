@@ -10,13 +10,14 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.w3c.dom.Document;
 
 
-public class Ejer18{
+public class Ejer23{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -52,17 +53,36 @@ public class Ejer18{
 		return jsonV;
 	}
 	
-	public void mostrarJSON(JsonValue json) {
-		String algo=json.asJsonObject().getString("name");
-		System.out.println(json.asJsonObject().getString("name"));
-		System.out.println(json.asJsonObject().getString("region"));
-		System.out.println(json.asJsonObject().getString("coatOfArms"));
+	public void mostrarJSON(JsonValue casa1, JsonValue casa2) {
+		JsonString nombreCasa1= casa1.asJsonObject().getJsonString("name");
+		JsonString nombreCasa2= casa2.asJsonObject().getJsonString("name");
+		
+		int contador1 = 0;
+		int contador2 = 0;
+		
+		JsonArray miembrosCasa1 = casa1.asJsonObject().getJsonArray("swornMembers");
+		JsonArray miembrosCasa2 = casa2.asJsonObject().getJsonArray("swornMembers");
+		
+		for(JsonValue miembroCasa1 : miembrosCasa1) {
+			contador1++;
+		}
+		
+		for(JsonValue miembroCasa2 : miembrosCasa2) {
+			contador2++;
+		}
+		
+		if(contador1>contador2) {
+			System.out.println("Tiene mas miembros la casa "+nombreCasa1.getString());
+		}else if(contador1<contador2){
+			System.out.println("Tiene mas miembros la casa "+nombreCasa2.getString());
+		}else {
+			System.out.println("Tienen los mismos miembros");
+		}
 	}
 	
 	public static void main(String[] args)  {
-		Ejer18 ejer18= new Ejer18();
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/362"));
-		ejer18.mostrarJSON(ejer18.leeJSON("https://anapioficeandfire.com/api/houses/378"));
+		Ejer23 ejer23= new Ejer23();
+		ejer23.mostrarJSON(ejer23.leeJSON("https://anapioficeandfire.com/api/houses/362"), ejer23.leeJSON("https://anapioficeandfire.com/api/houses/378"));
 
 	}
 }
