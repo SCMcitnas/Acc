@@ -17,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.w3c.dom.Document;
 
 
-public class Ejer24{
+public class Ejer26{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -54,24 +54,32 @@ public class Ejer24{
 	}
 	
 	public void mostrarJSON(String link) {
-		Ejer24 ejer24= new Ejer24();
-		JsonValue json = ejer24.leeJSON(link+"subjects/award:hugo_award=novel.json");
-		JsonArray ganadores = json.asJsonObject().getJsonArray("works");
-		for(JsonValue obra : ganadores) {
-			JsonString titulo = obra.asJsonObject().getJsonString("title");
-			System.out.println("Obra: "+titulo.getString());
-			JsonArray autores = obra.asJsonObject().getJsonArray("authors");
-			System.out.println("Autores: ");
-			for(JsonValue autor : autores) {
-				JsonString nombreAutor = autor.asJsonObject().getJsonString("name");
-				System.out.println("\t-"+nombreAutor.getString());
+		Ejer26 ejer26= new Ejer26();
+		JsonValue json = ejer26.leeJSON(link+"subjects/award:hugo_award=novel.json");
+		
+		String tituloM ="";
+		int cantidadM = 0;
+		int contador=0;
+		
+		JsonArray libros = json.asJsonObject().getJsonArray("works");
+		for(JsonValue libro :libros) {
+			JsonString titulo = libro.asJsonObject().getJsonString("title");
+			JsonArray estilos = libro.asJsonObject().getJsonArray("subject");
+			for(JsonValue estilo : estilos) {
+				contador++;
+			}
+			
+			if(contador> cantidadM) {
+				tituloM=titulo.getString();
 			}
 		}
+		
+		System.out.println(tituloM);
 	}
 	
 	public static void main(String[] args)  {
-		Ejer24 ejer24= new Ejer24();
-		ejer24.mostrarJSON("https://openlibrary.org/");
+		Ejer26 ejer26= new Ejer26();
+		ejer26.mostrarJSON("https://openlibrary.org/");
 
 	}
 }
