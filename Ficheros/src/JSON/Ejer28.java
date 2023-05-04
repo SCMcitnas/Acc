@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -17,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.w3c.dom.Document;
 
 
-public class Ejer26{
+public class Ejer28{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -54,34 +56,61 @@ public class Ejer26{
 	}
 	
 	public void mostrarJSON(String link) {
-		Ejer26 ejer26= new Ejer26();
-		JsonValue json = ejer26.leeJSON(link+"subjects/award:hugo_award=novel.json");
+		Ejer28 ejer28= new Ejer28();
+		JsonValue json = ejer28.leeJSON(link+"subjects/award:hugo_award=novel.json");
 		
-		String tituloM ="";
-		int cantidadM = 0;
+		int contadorM=0;
+		String estiloM="";
 		int contador=0;
+		List<String> lista = new ArrayList<String>();
 		
 		JsonArray libros = json.asJsonObject().getJsonArray("works");
 		for(JsonValue libro :libros) {
-			contador=0;
-			JsonString titulo = libro.asJsonObject().getJsonString("title");
+
 			JsonArray estilos = libro.asJsonObject().getJsonArray("subject");
-			for(JsonValue estilo : estilos) {
-				contador++;
-			}
 			
-			if(contador> cantidadM) {
-				tituloM=titulo.getString();
-				cantidadM=contador;
+			for(JsonString estilo : estilos.getValuesAs(JsonString.class)) {
+				lista.add(estilo.getString());
 			}
 		}
 		
-		System.out.println("El libro "+tituloM+" con "+cantidadM+" estilos");
+		for(int i=0; i< lista.size(); i++) {
+			contador=0;
+			
+			for(int j=0; j<lista.size(); j++) {
+				if(lista.get(i).equals(lista.get(j))) {
+					contador++;
+				}
+			}
+			
+			if(contadorM<contador) {
+				estiloM=lista.get(i);
+				contadorM=contador;
+			}
+		}
+		
+		
+		for(JsonValue libro :libros) {
+
+			JsonArray autores = libro.asJsonObject().getJsonArray("authors");
+			JsonArray estilos = libro.asJsonObject().getJsonArray("subject");
+			JsonString titulo = libro.asJsonObject().getJsonString("title");
+			
+			for(JsonString estilo : estilos.getValuesAs(JsonString.class)) {
+				if(estilo.getString().equals(estiloM)) {
+					System.out.println(titulo.getString());
+					for(JsonValue autor : autores) {
+						JsonString nombre = autor.asJsonObject().getJsonString("name");
+						System.out.println("\t-"+nombre.getString());
+					}
+				}
+			}
+		}
 	}
 	
 	public static void main(String[] args)  {
-		Ejer26 ejer26= new Ejer26();
-		ejer26.mostrarJSON("https://openlibrary.org/");
+		Ejer28 ejer28= new Ejer28();
+		ejer28.mostrarJSON("https://openlibrary.org/");
 
 	}
 }

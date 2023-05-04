@@ -79,7 +79,7 @@ public class Ejer10{
 	
 	public static void main(String[] args)  {
 		Ejer10 ejer10= new Ejer10();
-		Document doc = ejer10.creaArbol("https://www.marca.com/marcador/futbol/iphone/1/2016_17/fase0/jornada_31/marcador.xml");
+		Document doc = ejer10.creaArbol("C:\\Users\\Santiago\\Desktop\\algo\\liga.xml");
 		ejer10.recorreDom(doc);
 	}
 }

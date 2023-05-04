@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -17,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.w3c.dom.Document;
 
 
-public class Ejer22{
+public class Ejer27{
 	public JsonValue leeJSON(String ruta) {
 		JsonReader reader=null;
 		JsonValue jsonV=null;
@@ -53,22 +55,46 @@ public class Ejer22{
 		return jsonV;
 	}
 	
-	public void mostrarJSON(JsonValue json) {
-		if(json.asJsonObject().containsKey("ancestralWeapons")) {
-			JsonArray armas = json.asJsonObject().getJsonArray("ancestralWeapons");
-			JsonString nombreCasa = json.asJsonObject().getJsonString("name");
-			System.out.println(nombreCasa.getString()+":");
-			for(JsonString arma : armas.getValuesAs(JsonString.class)) {
-				System.out.println("\t-"+arma.getString());
+	public void mostrarJSON(String link) {
+		Ejer27 ejer27= new Ejer27();
+		JsonValue json = ejer27.leeJSON(link+"subjects/award:hugo_award=novel.json");
+		
+		int contadorM=0;
+		String estiloM="";
+		int contador=0;
+		List<String> lista = new ArrayList<String>();
+		
+		JsonArray libros = json.asJsonObject().getJsonArray("works");
+		for(JsonValue libro :libros) {
+
+			JsonArray estilos = libro.asJsonObject().getJsonArray("subject");
+			
+			for(JsonString estilo : estilos.getValuesAs(JsonString.class)) {
+				lista.add(estilo.getString());
 			}
-			System.out.println("\n");	
 		}
+		
+		for(int i=0; i< lista.size(); i++) {
+			contador=0;
+			
+			for(int j=0; j<lista.size(); j++) {
+				if(lista.get(i).equals(lista.get(j))) {
+					contador++;
+				}
+			}
+			
+			if(contadorM<contador) {
+				estiloM=lista.get(i);
+				contadorM=contador;
+			}
+		}
+		
+		System.out.println("El estilo "+estiloM+" con "+contadorM);
 	}
 	
 	public static void main(String[] args)  {
-		Ejer22 ejer22= new Ejer22();
-		ejer22.mostrarJSON(ejer22.leeJSON("C:\\Users\\Santiago\\Desktop\\algo\\Stark.json"));
-		ejer22.mostrarJSON(ejer22.leeJSON("C:\\Users\\Santiago\\Desktop\\algo\\Targaryen.json"));
+		Ejer27 ejer27= new Ejer27();
+		ejer27.mostrarJSON("https://openlibrary.org/");
 
 	}
 }
