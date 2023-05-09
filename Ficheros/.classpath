@@ -11,5 +11,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Downloads/sqlite-jdbc-3.40.0.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Santiago/Downloads/mariadb-java-client-3.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
