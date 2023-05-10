@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Ejer34{
+public class Ejer35{
 	
 	private Connection conexion;
 	public void abrirConexion(String bd, String servidor , String usuario, String password) {
@@ -42,11 +42,11 @@ public class Ejer34{
 	}
 	
 	int filasBorradas=0;
-	public void actualizarNaves(int dato, String cambio) {
+	public void añadirNaves(String nombre, String pais, String fabricante, String sistLanzamiento, double longitud, short masaSeco, short masaLanzamiento, short cargaUtil, double volumenUtil, short cargaUtilR, double diametro, short potencia) {
 		abrirConexion("add","localhost", "root","");
 		
 		try (Statement stmt=this.conexion.createStatement()){
-			String query="UPDATE naves SET pais=\""+cambio+"\" WHERE id="+dato;
+			String query= "INSERT INTO naves VALUES (NULL,\""+nombre+"\",\""+pais+"\",\""+fabricante+"\",\""+sistLanzamiento+"\","+longitud+","+masaSeco+","+masaLanzamiento+","+cargaUtil+","+volumenUtil+","+cargaUtilR+","+diametro+","+potencia+",\"Activo\")";
 			
 			int filasAfectadas=stmt.executeUpdate(query);
 			System.out.println("Filas actualizadas: "+filasAfectadas);
@@ -59,7 +59,15 @@ public class Ejer34{
 	}
 	
 	public static void main(String[] args)  {
-		Ejer34 ejer34= new Ejer34();
-		ejer34.actualizarNaves(4, "Rusia");
+		Ejer35 ejer35= new Ejer35();
+
+		short masaSeco= 3;
+		short masaLanzamiento = 10;
+		short cargaUtil = 5;
+		short cargaUtilR = 3;
+		short potencia = 4;
+		 
+		
+		ejer35.añadirNaves("NavePrueba", "España", "Yo", "Y", 3.5, masaSeco, masaLanzamiento, cargaUtil, 23.4, cargaUtilR, 3.74, potencia);
 	}
 }
