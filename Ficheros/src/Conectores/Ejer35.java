@@ -30,7 +30,7 @@ public class Ejer35{
 				System.out.println("SQLException: " + e.getLocalizedMessage());
 				System.out.println("SQLState: " + e.getSQLState());
 				System.out.println("Código error: " + e.getErrorCode());
-			}
+		}
 	}
 	
 	public void cerrarConexion (){
