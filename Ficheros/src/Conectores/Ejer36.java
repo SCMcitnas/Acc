@@ -130,7 +130,7 @@ public class Ejer36{
 			while (rs.next ()) {
 				if(rs.getInt("id")==2 || rs.getInt("id")==4) {
 					
-					System.out.println("Volumen de carga: ");
+					System.out.println("Volumen de carga: "+(rs.getFloat("volumenUtil")+1));
 				}
 			}
 
